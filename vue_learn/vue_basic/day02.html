@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>初识vue</title>
+        <!-- 引入Vue -->
+        <script type="text/javascript" src="./js/vue.js"></script>
+    </head>
+    <body>
+        <!-- 容器和vue实例一一对应！ -->
+        <div id="root1">
+            <!-- 插值语法 {{}} -->
+            <h1>Hello, {{name}} {{age}}</h1>
+        </div>
+
+        <div id="root2">
+            <!-- 插值语法 {{}} -->
+            <h1>Hello, {{name}} {{age}}</h1>
+        </div>
+        <!-- 设置为 false 以阻止 vue 在启动时生成生产提示。 -->
+        <script type="text/javascript">
+            Vue.config.productionTip = false
+            //创建vue实例
+            new Vue({
+                el:'#root1', //el用于指定当前Vue实例为哪个容器服务，值通常为css选择器字符串， . class选择器
+                data:{  //data中存储数据，数据供el所指定的容器使用， 值暂时先写成一个对象
+                    name: 'MDC',
+                    age: 18
+                }
+
+            })
+            new Vue({
+                el:'#root2', //el用于指定当前Vue实例为哪个容器服务，值通常为css选择器字符串， . class选择器
+                data:{  //data中存储数据，数据供el所指定的容器使用， 值暂时先写成一个对象
+                    name: 'MDC',
+                    age: 19
+                }
+
+            })
+
+        </script>
+    </body>
+</html>

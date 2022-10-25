@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>分析生命周期</title>
+        <!-- 引入Vue -->
+        <script type="text/javascript" src="./js/vue.js"></script>
+    </head>
+    <body>
+
+        <div id="root">
+            <!-- 插值语法 {{}} -->
+            <h2 v-text="n"></h2>
+            <h2>当前N值是：{{n}}</h2>
+            <button @click="add">点我n+1</button>
+            <button @click="bye">点我销毁VM</button>
+        </div>
+        
+        <script type="text/javascript">
+            Vue.config.productionTip = false  //<!-- 设置为 false 以阻止 vue 在启动时生成生产提示。 -->
+            //创建vue实例
+            new Vue({
+                el:'#root', //el用于指定当前Vue实例为哪个容器服务，值通常为css选择器字符串， # id选择器
+                data:{  //data中存储数据，数据供el所指定的容器使用， 值暂时先写成一个对象
+                    name: 'hz',
+                    n:1
+                },
+                methods: {
+                    add(){
+                        console.log('add')
+                        this.n++
+                    },
+                    bye(){
+                        console.log("销毁vm")
+                        this.$destroy()
+                    }
+
+                },
+                watch:{
+                    n(){
+                        console.log('n change')
+                    }
+                },
+                beforeCreate() {
+                    console.log("beforeCreate")
+                    // console.log(this)
+                    // debugger
+                },
+                created() {
+                    console.log("created")
+                    // console.log(this)
+                    // debugger  
+                },
+                beforeMount() {
+                    console.log("beforeMount")
+                    // console.log(this)
+                    // debugger                      
+                },
+                // vue完成模板解析，并把初始的真实dom元素放入页面（挂载完毕）后调用
+                mounted() {
+                    console.log("mounted")
+                    // console.log(this)
+                    // debugger   
+                },
+                beforeUpdate() {
+                    console.log("beforeUpdate")
+                    // console.log(this)
+                    // debugger                        
+                },
+                updated() {
+                    console.log("updated")
+                    // console.log(this)
+                    // debugger   
+                },
+                beforeDestroy() {
+                    console.log("beforeDestroy")
+                    console.log(this.n)
+                    this.add()
+                    // console.log(this)
+                    // debugger   
+                },
+                destroyed() {
+                    console.log("destroyed")
+                    // console.log(this)
+                    // debugger     
+                },
+
+            })
+
+            // 通过外部的定时器实现，不推荐
+            // setInterval(() => {
+            //     vm.opacity -= 0.01
+            //     if(vm.opacity <= 0) vm.opacity = 1
+            // }, 16);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Vue监测数据的原理</title>
+        <!-- 引入Vue -->
+        <script type="text/javascript" src="./js/vue.js"></script>
+    </head>
+    <body>
+        <!-- 准备好一个容器 -->
+        <div id="root">
+            <h1>学校信息</h1>
+            <h2>学校名称：{{name}}</h2>
+            <h2>学校地址：{{addr}}</h2>
+            <hr/>
+            <h1>学生信息</h1>
+            <button @click="addSex">添加性别属性</button>
+            <h2>学生姓名：{{student.name}}</h2>
+            <h2>学生性别：{{student.sex}}</h2>
+            <h2>学生真实年龄：{{student.age.rAge}}</h2>   
+            <hr/>
+            <h1>朋友信息</h1>
+            <ul>
+                <li v-for="(f,index) in student.friends" :key="">
+                    {{f.name}}--{{f.age}}
+                </li>
+            </ul>              
+        </div>
+        
+        <script type="text/javascript">
+            Vue.config.productionTip = false  //<!-- 设置为 false 以阻止 vue 在启动时生成生产提示。 -->
+            // 用计算属性实现
+            const vm =  new Vue({
+                el:'#root', //el用于指定当前Vue实例为哪个容器服务，值通常为css选择器字符串， # id选择器
+                data:{
+                    name:'北京大学',
+                    addr: 'hz',
+                    student:{
+                        name:'tom',
+                        age:{
+                            rAge:20,
+                            sAge:18
+                        },
+                    friends:[
+                        {"name":'jerry', age:12},
+                        {"name":'spark', age:13}
+                    ]
+                    }
+                },
+                methods: {
+                addSex(){ 
+                    // Vue.set(this.student, 'sex', '男')
+                    this.$set(this.student, 'sex', '男')
+                    }
+                }        
+            },)
+        </script>
+    </body>
+</html>

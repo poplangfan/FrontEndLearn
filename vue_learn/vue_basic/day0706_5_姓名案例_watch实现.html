@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>姓名案例_watch实现</title>
+        <!-- 引入Vue -->
+        <script type="text/javascript" src="./js/vue.js"></script>
+    </head>
+    <body>
+        <!--
+            计算属性VS监视属性
+            两者都可以实现某一功能，一般场景计算属性更简单
+            某种特殊场景，只能用watch，比如更改此案例中的 姓 ，改变之后一秒钟，全名再变动(异步任务)
+            1、computed能完成的，watch都可以完成
+            2、watch能完成的功能，computed不一定能完成，比如上述例子
+            两个重要的原则:
+            1、所有被vue管理的函数，最好写成普通函数，这样this的指向才是vm，或组件实例对象
+            2、所有不被vue所管理的函数（定时器的回调函数、ajax的回调函数等、Promise的回调函数）最好携程箭头函数，
+            这样this的指向才是vm，或组件实例对象
+        -->
+        <!-- 准备好一个容器 -->
+        <div id="root">
+            姓：<input type="text" v-model="firstName"><br>
+            名: <input type="text" v-model="lastName"><br>
+            全名：<span>{{fullName}}</span><br>
+        </div>
+        
+        <script type="text/javascript">
+            Vue.config.productionTip = false  //<!-- 设置为 false 以阻止 vue 在启动时生成生产提示。 -->
+            //创建vue实例
+            const vm = new Vue({
+                el:'#root', //el用于指定当前Vue实例为哪个容器服务，值通常为css选择器字符串， # id选择器
+                data:{  //data中存储数据，数据供el所指定的容器使用， 值暂时先写成一个对象
+                    firstName: 'Vue',
+                    lastName: "Test",
+                    fullName: 'Vue-Test'
+                },
+                watch:{
+                    firstName(newValue, oldValue){
+                        setTimeout(() => {
+                            this.fullName = newValue + '-' + this.lastName
+                        }, 1000)
+                    },
+                    lastName(newValue, oldValue){
+                        this.fullName = this.firstName + '-' + newValue
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

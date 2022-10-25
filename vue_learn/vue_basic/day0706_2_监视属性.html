@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>监视属性</title>
+        <!-- 引入Vue -->
+        <script type="text/javascript" src="./js/vue.js"></script>
+    </head>
+    <body>
+        <!-- 
+            监视属性watch
+            1、当被监视的属性发生变化时，回调函数会自动调用，执行相关操作
+            2、监视的属性必须存在，才能进行监视
+            3、监视的两种写法（1）new Vue时直接传入watch配置 （2）通过vm.$watch监视
+        -->
+        <!-- 准备好一个容器 -->
+        <div id="root">
+            <!-- 插值语法 {{}}  ? : 三元表达式-->
+            <h2>今天天气很 {{info}}</h2>
+            <!-- <button @click="isHot = !isHot; x++">切换天气</button> -->
+            <button @click="changeWeather">切换天气</button>
+        </div>
+        
+        <script type="text/javascript">
+            Vue.config.productionTip = false  //<!-- 设置为 false 以阻止 vue 在启动时生成生产提示。 -->
+            //创建vue实例
+            const vm = new Vue({
+                el:'#root', //el用于指定当前Vue实例为哪个容器服务，值通常为css选择器字符串， # id选择器
+                data:{  //data中存储数据，数据供el所指定的容器使用， 值暂时先写成一个对象
+                    isHot: true
+                },
+                computed:{
+                    info(){
+                        return this.isHot ? '炎热' : '凉爽'
+                    }
+                },
+                methods: {
+                    changeWeather(){
+                        // isHot 取反
+                        this.isHot = !this.isHot,
+                        this.x++
+                    }
+                },
+                // watch:{
+                //     isHot:{
+                //         // 
+                //         immediate:true,
+                //         // handler  当isHot被修改时，handler发生调用
+                //         handler(newValue, oldValue){
+                //             console.log("handler被调用", newValue, oldValue)
+                //         }
+                //     }
+                // }
+            })
+            // 另一种实现方法
+            vm.$watch('isHot', {
+                // handler  当isHot被修改时，handler发生调用
+                handler(newValue, oldValue){
+                    console.log("handler被调用", newValue, oldValue)
+            }})
+        </script>
+    </body>
+</html>
